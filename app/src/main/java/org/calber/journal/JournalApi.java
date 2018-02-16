@@ -23,6 +23,6 @@ public interface JournalApi {
 
     @Headers("Authorization: Basic c2FtcGxlOmVmZXJ3NXdyMzM1wqM2NQ==")
     @GET("sample/tag/{slug}")
-    Observable<Publication> slug(@Path("slug") String slug);
+    Observable<River> slug(@Path("slug") String slug);
 
 }

@@ -2,6 +2,10 @@ package org.calber.journal;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSyntaxException;
+
+import org.calber.journal.models.Images;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -22,6 +26,14 @@ class ApiController {
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+
+                .registerTypeAdapter(Images.class, (JsonDeserializer<Images>) (json, typeOfT, context) -> {
+                    try {
+                        return new Gson().fromJson(json, Images.class);
+                    } catch (JsonSyntaxException e) {
+                        return new Images();
+                    }
+                })
                 .create();
 
         OkHttpClient client = new OkHttpClient.Builder()
